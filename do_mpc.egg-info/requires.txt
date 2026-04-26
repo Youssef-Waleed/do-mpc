@@ -1,0 +1,12 @@
+casadi>=3.6.0
+scipy
+numpy
+matplotlib
+pandas
+
+[full]
+onnx>=1.13.0
+ipykernel
+packaging
+asyncua
+torch>2.0.0

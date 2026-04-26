@@ -31,7 +31,7 @@ sys.path.append(rel_do_mpc_path)
 import do_mpc
 
 
-def template_mpc(model, silence_solver=False):
+def template_mpc(model, silence_solver=False, test_flag=False):
     """
     --------------------------------------------------------------------------
     template_mpc: tuning parameters
@@ -67,7 +67,18 @@ def template_mpc(model, silence_solver=False):
     mpc.set_objective(mterm=mterm, lterm=lterm)
 
     # setting up the factors for input penalisation
-    mpc.set_rterm(F=0.1, Q_dot = 1e-3)
+
+    penalty_F = 0.1 * (model.u['F'] - mpc.u_prev['F'])**2
+    penalty_Q = 1e-3 * (model.u['Q_dot'] - mpc.u_prev['Q_dot'])**2
+
+    # 2. Sum them into a single scalar expression
+    r_symbolic_total = penalty_F + penalty_Q
+
+
+    if test_flag == True:
+        mpc.set_rterm(r_symbolic_total)
+    else:
+        mpc.set_rterm(F=0.1, Q_dot = 1e-3)
 
     # setting up lower boundaries for the states
     mpc.bounds['lower', '_x', 'C_a'] = 0.1
