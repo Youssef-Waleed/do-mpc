@@ -64,7 +64,7 @@ class TestKite(unittest.TestCase):
         print('Testing MX implementation')
         self.kite('MX')
 
-    def kite(self):
+    def kite(self, symvar_type):
         """
         Configure do-mpc modules:
         """
