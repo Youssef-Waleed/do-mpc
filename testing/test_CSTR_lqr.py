@@ -102,6 +102,10 @@ class TestCSTRLQR(unittest.TestCase):
                 x0 = y_next
             
             """
+            Store results (for reference run):
+            """
+            #do_mpc.data.save_results([simulator], result_name='results_CSTR_LQR', overwrite=True)
+            """
             Compare results to reference run:
             """
             ref = do_mpc.data.load_results('./results/results_CSTR_LQR.pkl')

@@ -118,7 +118,7 @@ class TestCSTR(unittest.TestCase):
         """
         Store results (from reference run):
         """
-        # do_mpc.data.save_results([mpc, simulator, estimator], 'results_CSTR', overwrite=True)
+        #do_mpc.data.save_results([mpc, simulator, estimator], 'results_CSTR', overwrite=True)
 
         """
         Compare results to reference run:
