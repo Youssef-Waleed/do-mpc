@@ -7,10 +7,9 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        # Dimension 1: The Python versions
         python-version: ["3.10", "3.11", "3.12"]
-        # Dimension 2: The exact names of the requirement files
         requirements-file: ["requirements_full.txt", "requirements.txt"]
 
     steps:
