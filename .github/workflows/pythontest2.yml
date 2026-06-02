@@ -40,4 +40,4 @@ jobs:
           fi
           
           # Run the test suite
-          python -m unittest discover -pattern "test_*.py"
+          python -m unittest
