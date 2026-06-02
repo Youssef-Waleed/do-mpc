@@ -28,7 +28,11 @@ import copy
 import warnings
 import time
 
-from sympy.solvers.ode.single import solver_map
+try:
+    from sympy.solvers.ode.single import solver_map
+    HAS_SYMPY = True
+except ImportError:
+    HAS_SYMPY = False
 
 from ..optimizer import Optimizer
 from ._base import Estimator
