@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.signal import TransferFunction as TF
 
+from examples.kite.test_wind_model import H_F_ss_dis
+
 
 class Wind:
     """
@@ -55,9 +57,15 @@ class Wind:
         # Convert to discrete-time:
         H_F_ss_dis = H_F_ss_cont.to_discrete(dt=t_step)
 
+        """
         self.A_dis = float(H_F_ss_dis.A)
         self.B_dis = float(H_F_ss_dis.B)
         self.C_dis = float(H_F_ss_dis.C)
+        """
+        # fix the numpy 2.0.0+ issue with 0-dim arrays
+        self.A_dis = float(np.asarray(H_F_ss_dis.A).flatten()[0])
+        self.B_dis = float(np.asarray(H_F_ss_dis.B).flatten()[0])
+        self.C_dis = float(np.asarray(H_F_ss_dis.C).flatten()[0])
 
         #
         self.f_init = np.random.normal()/4

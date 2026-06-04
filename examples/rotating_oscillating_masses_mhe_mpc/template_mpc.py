@@ -78,7 +78,12 @@ def template_mpc(model, silence_solver = False):
     # depending on the current timestep.
     tvp_template = mpc.get_tvp_template()
     def tvp_fun(t_now):
-        ind = int(t_now/mpc.settings.t_step)
+
+        #ind = int(t_now/mpc.settings.t_step)
+
+        # fix the numpy 2.0.0+ issue with 0-dim arrays
+        ind = int(np.asarray(t_now/mpc.settings.t_step).flatten()[0])
+
         tvp_template['_tvp', :-1] = vertsplit(tvp_traj[ind:ind+mpc.settings.n_horizon])
         return tvp_template
 
