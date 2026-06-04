@@ -28,9 +28,9 @@ num = [K_F]
 den = [tau_F,1.0]
 H_F_tf_cont = TF(num,den)
 H_F_ss_cont = H_F_tf_cont.to_ss()
-A_cont = float(H_F_ss_cont.A)
-B_cont = float(H_F_ss_cont.B)
-C_cont = float(H_F_ss_cont.C)
+A_cont = float(np.asarray(H_F_ss_cont.A).flatten()[0])
+B_cont = float(np.asarray(H_F_ss_cont.B).flatten()[0])
+C_cont = float(np.asarray(H_F_ss_cont.C).flatten()[0])
 w = SX.sym("w")
 x = SX.sym("x")
 u = SX.sym("u")
@@ -43,9 +43,9 @@ simulator_f = integrator("simulator_f", "cvodes", dae_f, opts)
 simulator = integrator("simulator", "cvodes", dae, opts)
 
 H_F_ss_dis = H_F_ss_cont.to_discrete(dt=T_W)
-A_dis = float(H_F_ss_dis.A)
-B_dis = float(H_F_ss_dis.B)
-C_dis = float(H_F_ss_dis.C)
+A_dis = float(np.asarray(H_F_ss_dis.A).flatten()[0])
+B_dis = float(np.asarray(H_F_ss_dis.B).flatten()[0])
+C_dis = float(np.asarray(H_F_ss_dis.C).flatten()[0])
 
 # generate wind trajectory
 w_N_dis = []
@@ -81,4 +81,7 @@ for j in range(N_traj):
     plt.plot(w_cur_cont,label='cont')
     plt.legend()
 
-input('bla')
+# This blocks rogue code from running during an import
+if __name__ == '__main__':
+    print('blablabla')
+    input('bla')
