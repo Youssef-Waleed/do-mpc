@@ -7,20 +7,35 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
+        requirements-file: ["requirements_full.txt", "requirements.txt"]
 
     steps:
       - uses: actions/checkout@v3
+      
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements_full.txt
+          # Install the exact requirements file assigned by the matrix
+          pip install -r ${{ matrix.requirements-file }}
+          
+          
       - name: Test
         run: |
           cd testing
+          
+          # Check if the matrix is currently running the lite requirements
+          if [ "${{ matrix.requirements-file }}" = "requirements.txt" ]; then
+            echo "Removing advanced tests for Lite build..."
+            rm -f test_CSTR_lqr.py test_batch_reactor_lqr_dae.py test_oscillating_masses_discrete_lqr.py test_CSTR_approx_MPC.py test_onnx.py
+          fi
+          
+          # Run the test suite
           python -m unittest
