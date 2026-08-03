@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "do-mpc-parameter-estimation"
+version = "0.1.0"
+description = "Focused do-mpc multi-experiment parameter estimation"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "casadi>=3.7.2",
+    "do-mpc>=5.1.1",
+    "numpy>=1.26,<2",
+    "pandas>=2.2.0",
+    "scipy>=1.16.3",
+    "matplotlib>=3.9.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-ra"
+filterwarnings = [
+    "ignore:The ONNX feature is not available.*:UserWarning",
+    "ignore:The opcua feature is not available.*:UserWarning",
+    "ignore:The approximateMPC feature requires PyTorch.*:UserWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
